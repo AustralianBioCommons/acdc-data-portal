@@ -1100,15 +1100,35 @@ Currently, in order to export a File PFB, \`enableLimitedFilePFBExport\` must be
           * Buttons without dropdownId are rendered as normal buttons
           * Buttons don't share same dropdownId with others are rendered as normal buttons
           */
-          this.props.buttonConfig
-          && this.props.buttonConfig.buttons
-          && this.props.buttonConfig.buttons
+          this.props.buttonConfig &&
+          this.props.buttonConfig.buttons &&
+          this.props.buttonConfig.buttons
             .filter((buttonConfig) => !dropdownConfigs
               || !buttonConfig.dropdownId
               || (dropdownConfigs[buttonConfig.dropdownId].cnt === 1),
             )
             .filter((buttonConfig) => buttonConfig.enabled)
-            .map((buttonConfig) => this.renderButton(buttonConfig))
+            .map((buttonConfig) => (
+              <React.Fragment key={buttonConfig.type}>
+                {this.renderButton(buttonConfig)}
+                {buttonConfig.type.includes('manifest') && buttonConfig.helpLink && (
+                  <div style={{ marginTop: '4px', marginBottom: '12px' }}>
+                    <a
+                      href={buttonConfig.helpLink}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      style={{
+                        fontSize: '12px',
+                        textDecoration: 'underline',
+                        display: 'inline-block',
+                      }}
+                    >
+                      Need help with manifest files?
+                    </a>
+                  </div>
+                )}
+              </React.Fragment>
+            ))
         }
         { this.getToaster() }
       </React.Fragment>

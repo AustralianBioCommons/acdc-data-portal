@@ -46,6 +46,8 @@ export const ButtonConfigType = PropTypes.shape({
     fileName: PropTypes.string,
     dropdownId: PropTypes.string,
     tooltipText: PropTypes.string,
+    helpLink: PropTypes.string,
+
   })),
   dropdowns: PropTypes.object,
   terraExportURL: PropTypes.string,

@@ -44,11 +44,7 @@ RUN COMMIT=`git rev-parse HEAD` && echo "export const portalCommit = \"${COMMIT}
     && VERSION=`git describe --always --tags` && echo "export const portalVersion =\"${VERSION}\";" >>src/versions.js \
     && /bin/rm -rf .git \
     && /bin/rm -rf node_modules
-RUN npm config set unsafe-perm=true \
-    && npm ci \
-    && npm run relay \
-    && npm run params
-    # see https://stackoverflow.com/questions/48387040/nodejs-recommended-max-old-space-size
-RUN NODE_OPTIONS=--max-old-space-size=3584 NODE_ENV=production npx webpack build
+RUN npm config set unsafe-perm=true && npm ci
 
+    # see https://stackoverflow.com/questions/48387040/nodejs-recommended-max-old-space-size
 CMD [ "bash", "./dockerStart.sh" ]

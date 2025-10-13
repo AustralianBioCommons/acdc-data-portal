@@ -36,7 +36,7 @@ class TopBar extends Component {
   render() {
     const { user } = this.props;
     // Prefer: preferred_username > display_name > name > username > email
-    const userLabel = (user && (user.preferred_username || user.display_name || user.name || user.username || user.email)) || '';
+    const userLabel = (user && (user.preferred_username || user.display_name || user.email || user.username || user.name)) || '';
     return (
       <div className='top-bar'>
         <div className='top-bar__header'>
