@@ -1,0 +1,33 @@
+:root {
+    --primary: #c80045;
+    --navy: #0b2545;
+    --text: #0f172a;
+    --muted: #64748b;
+    --bg: #ffffff;
+    --subtle: #f9fafb;
+}
+
+/* Navbar / Header */
+.navbar, .g3-header {
+    background: var(--navy) !important;
+    color: #fff !important;
+}
+
+/* Footer */
+.footer {
+    background: var(--subtle);
+    color: var(--muted);
+}
+
+/* Buttons */
+.btn-primary, .g3-login-button {
+    background: var(--primary) !important;
+    border-color: var(--primary) !important;
+    color: #fff !important;
+}
+
+.btn-primary:hover,
+.g3-login-button:hover {
+    background: #a30038 !important; /* darken(#c80045, 8%) */
+    border-color: #a30038 !important;
+}
