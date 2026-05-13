@@ -93,6 +93,7 @@ class StudyDetails extends React.Component {
             resource_path: this.props.data.accessibleValidationValue,
             resource_id: this.props.data.rowAccessorValue,
             resource_display_name: this.props.data[requestAccessConfig.resourceDisplayNameField],
+            study_url: window.location.href,
           };
           fetchWithCreds({
             path: `${requestorPath}request`,
@@ -100,13 +101,15 @@ class StudyDetails extends React.Component {
             body: JSON.stringify(body),
           }).then(
             ({ data, status }) => {
-              if (status === 201) {
+              if (status === 200 || status === 201) {
                 // if a redirect is configured, Requestor returns a redirect URL
                 if (data && data.redirect_url) {
                   this.setState({
                     redirectUrl: data.redirect_url,
                     redirectModalVisible: true,
                   });
+                } else {
+                  this.setState({ accessRequested: true });
                 }
               } else if (status === 409) {
                 // the request status was updated between the page
@@ -262,7 +265,7 @@ class StudyDetails extends React.Component {
 
   handleRedirectModalOk = () => {
     if (this.state.redirectUrl) {
-      window.open(this.state.redirectUrl);
+      window.location.href = this.state.redirectUrl;
     }
     this.setState({
       redirectModalVisible: false,
