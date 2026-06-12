@@ -115,7 +115,7 @@ const accessibleDataFilterToggle = () => {
   }
 };
 
-export const renderFieldContent = (content: any, contentType: 'string' | 'paragraphs' | 'number' | 'link' | 'tags' = 'string', config: DiscoveryConfig): React.ReactNode => {
+export const renderFieldContent = (content: any, contentType: 'string' | 'paragraphs' | 'number' | 'link' | 'tags' | 'request_access_button' = 'string', config: DiscoveryConfig): React.ReactNode => {
   switch (contentType) {
   case 'string':
     if (Array.isArray(content)) {
@@ -407,6 +407,22 @@ const Discovery: React.FunctionComponent<Props> = (props: Props) => {
     textWrap: 'word-break',
     width: column.width,
     render: (_, record) => {
+        if (column.contentType === 'request_access_button') {
+            return (
+                <Button
+                    onClick={(ev) => {
+                        ev.stopPropagation();
+
+                        const currentPath = window.location.pathname;
+
+                        window.location.href =
+                            `${currentPath}/${encodeURIComponent(record.name)}?request_access`;
+                    }}
+                >
+                    Request Access
+                </Button>
+            );
+        }
       let value = jsonpath.query(record, `$.${column.field}`);
       let renderedCell: undefined | string | ReactNode;
 

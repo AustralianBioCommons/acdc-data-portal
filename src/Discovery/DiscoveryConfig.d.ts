@@ -95,7 +95,7 @@ export interface DiscoveryConfig {
     studyColumns: {
         name: string
         field: string
-        contentType?: 'string' | 'number' | 'link'
+        contentType?: 'string' | 'number' | 'link' | 'request_access_button'
         errorIfNotAvailable?: boolean
         valueIfNotAvailable?: string | number
         ellipsis?: boolean
