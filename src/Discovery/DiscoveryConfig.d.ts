@@ -96,6 +96,11 @@ export interface DiscoveryConfig {
         name: string
         field: string
         contentType?: 'string' | 'number' | 'link' | 'request_access_button'
+        // When contentType is 'request_access_button':
+        //   resource_path is taken from minimalFieldMapping.authzField on the study record
+        //   resource_id   is taken from minimalFieldMapping.uid on the study record
+        //   redirectModalText is the human-readable name shown in the REMS redirect confirmation
+        redirectModalText?: string
         errorIfNotAvailable?: boolean
         valueIfNotAvailable?: string | number
         ellipsis?: boolean
@@ -145,7 +150,7 @@ export interface DiscoveryConfig {
                 header: string
                 fields: {
                     type: 'block' | 'text' | 'link' | 'textList' | 'linkList'
-                     | 'accessDescriptor' | 'tags' | 'dataDownloadList'
+                        | 'accessDescriptor' | 'tags' | 'dataDownloadList'
                     sourceField?: string
                     label: string
                     // optionally refine tags by categories
@@ -179,7 +184,7 @@ export interface StudyPageFieldConfig {
     valueIfNotAvailable?: string | number
 }
 export interface AggregationConfig {
-  name: string
-  field: string
-  type: 'sum' | 'count'
+    name: string
+    field: string
+    type: 'sum' | 'count'
 }
