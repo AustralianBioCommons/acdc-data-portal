@@ -414,7 +414,7 @@ const Discovery: React.FunctionComponent<Props> = (props: Props) => {
         const resourceId = String(record[config.minimalFieldMapping.uid]);
         const displayName = record[column.field] || record.name || resourceId;
         const redirectModalText = column.redirectModalText
-                        || 'the REMS access request form';
+                        || 'An access request will be created in REMS and you will be redirected to complete your application form.';
         return (
           <Button
             onClick={async (ev) => {
@@ -438,15 +438,9 @@ const Discovery: React.FunctionComponent<Props> = (props: Props) => {
                 if (status === 200 || status === 201) {
                   if (data && data.redirect_url) {
                     Modal.confirm({
-                      title: 'Complete your access request',
+                      title: 'Press "Continue" to start the application process',
                       content: (
-                        <span>
-                            You will be redirected to{' '}
-                          <a href={data.redirect_url} target='_blank' rel='noreferrer'>
-                            {redirectModalText}
-                          </a>{' '}
-                                                        to complete your application.
-                        </span>
+                        <span>{redirectModalText}</span>
                       ),
                       okText: 'Continue',
                       cancelText: 'Cancel',
