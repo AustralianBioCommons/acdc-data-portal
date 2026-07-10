@@ -36,7 +36,7 @@ class TierAccessSelector extends React.Component {
           tabIndex={0}
         >
           <h4>
-            <span className='tier-access-selector__title'>Data Access</span>
+            <span className='tier-access-selector__title'>Request Access</span>
             <i className={`tier-access-selector__dropdown-icon g3-icon g3-icon--chevron-${this.state.toggled ? 'down' : 'up'}`} />
           </h4>
         </div>
@@ -88,7 +88,7 @@ class TierAccessSelector extends React.Component {
                 this.state.selected !== 'with-access' && !this.props.hideGetAccessButton && (
                   <div className='tier-access-selector__button-wrapper'>
                     <Button
-                      label='Get Access'
+                      label='Request Access'
                       className='tier-access-selector__button'
                       buttonType='default'
                       enabled={!!(this.props.getAccessButtonLink)}
