@@ -20,7 +20,7 @@ class ExplorerTopMessageBanner extends React.Component {
                   { (hideGetAccessButton) ? (<React.Fragment />)
                     : (
                       <Button
-                        label='Get Access'
+                        label='Request Access'
                         className='top-message-banner__button'
                         buttonType='default'
                         enabled={!!(this.props.getAccessButtonLink)}
@@ -35,13 +35,18 @@ class ExplorerTopMessageBanner extends React.Component {
                     )}
                 </div>
                 <div className='top-message-banner__text-wrapper'>
-                  <span className='top-message-banner__normal-text'>Due to lack of access, you are only able to narrow the cohort down to </span>
-                  <span className='top-message-banner__bold-text'>{ this.props.tierAccessLimit } </span>
                   <span className='top-message-banner__normal-text'>
+                    Data has been aggregated and limited to a maximum of{' '}
+                  </span>
+                  <span className='top-message-banner__bold-text'>
+                    {this.props.tierAccessLimit}
+                  </span>
+                  <span className='top-message-banner__normal-text'>
+                    {' '}
                     {this.props.guppyConfig.nodeCountTitle
                       ? this.props.guppyConfig.nodeCountTitle.toLowerCase()
-                      : labelToPlural(this.props.guppyConfig.dataType)}.
-                  Please request additional access if necessary.
+                      : labelToPlural(this.props.guppyConfig.dataType)}
+                    . To access the complete dataset, please submit a Data Access Application.
                   </span>
                 </div>
               </div>
