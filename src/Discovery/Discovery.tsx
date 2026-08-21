@@ -3,6 +3,7 @@ import React, {
     useRef,
 } from 'react';
 import * as JsSearch from 'js-search';
+import { useHistory, useLocation } from 'react-router-dom';
 import jsonpath from 'jsonpath';
 import {
     Tag, Space, Collapse, Button, Dropdown, Pagination, Tooltip, Spin, message, Modal,
@@ -206,6 +207,7 @@ export interface DiscoveryResource {
 
 export interface Props {
     config: DiscoveryConfig,
+    user?: { username?: string },
     studies: DiscoveryResource[],
     studyRegistrationValidationField: string,
     params?: { studyUID: string | null }, // from React Router
@@ -229,6 +231,8 @@ export interface Props {
 
 const Discovery: React.FunctionComponent<Props> = (props: Props) => {
     const { config } = props;
+    const history = useHistory();
+    const location = useLocation();
     const [jsSearch, setJsSearch] = useState(null);
     const [executedSearchesCount, setExecutedSearchesCount] = useState(0);
     const [accessibilityFilterVisible, setAccessibilityFilterVisible] = useState(false);
@@ -415,10 +419,29 @@ const Discovery: React.FunctionComponent<Props> = (props: Props) => {
                     const displayName = record[column.field] || record.name || resourceId;
                     const redirectModalText = column.redirectModalText
                         || 'An access request will be created in REMS and you will be redirected to complete your application form.';
+                    const isLoggedIn = Boolean(props.user && props.user.username);
+                    // Send the user back to where they were after logging in, so the
+                    // access request can be resumed from the same Discovery page.
+                    const redirectToLogin = () => {
+                        history.push('/login', {
+                            from: `${location.pathname}${location.search}`,
+                        });
+                    };
                     return (
                         <Button
                             onClick={(ev) => {
                                 ev.stopPropagation();
+                                // Requesting access creates a REMS application on the user's
+                                // behalf, which requires an authenticated session. If the user
+                                // is not logged in, requestor returns 401 ("Must provide an
+                                // access token."). The button label already reads "Log in to
+                                // request access" in this state, so send them straight to login
+                                // (they return to this page afterward) instead of firing a POST
+                                // that would surface a raw 401.
+                                if (!isLoggedIn) {
+                                    redirectToLogin();
+                                    return;
+                                }
                                 if (!authzValue) {
                                     message.error('This study does not have an access control path configured.');
                                     return;
@@ -455,6 +478,21 @@ const Discovery: React.FunctionComponent<Props> = (props: Props) => {
                                                 } else {
                                                     message.success('Access request submitted successfully.');
                                                 }
+                                            } else if (status === 401 || status === 403) {
+                                                // Session expired or insufficient credentials between
+                                                // the login check and the POST — prompt a re-login.
+                                                Modal.confirm({
+                                                    title: 'Your session has expired',
+                                                    content: (
+                                                        <span>
+                                                            Your session is no longer valid. Please log
+                                                            in again to submit your access request.
+                                                        </span>
+                                                    ),
+                                                    okText: 'Log in',
+                                                    cancelText: 'Cancel',
+                                                    onOk: redirectToLogin,
+                                                });
                                             } else if (status === 409) {
                                                 message.info('You already have a pending access request for this study.');
                                             } else {
@@ -467,7 +505,7 @@ const Discovery: React.FunctionComponent<Props> = (props: Props) => {
                                 });
                             }}
                         >
-                            Request Access
+                            {isLoggedIn ? 'Request Access' : 'Log in to request access'}
                         </Button>
                     );
                 }
