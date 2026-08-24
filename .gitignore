@@ -25,3 +25,4 @@ __generated__/
 .DS_Store
 .dccache
 .vscode/*
+.idea/*

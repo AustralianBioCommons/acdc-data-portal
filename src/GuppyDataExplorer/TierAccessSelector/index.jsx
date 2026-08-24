@@ -4,8 +4,8 @@ import Button from '@gen3/ui-component/dist/components/Button';
 import './TierAccessSelector.css';
 
 /**
- * Tier access selector has 3 options: 'Data with Access', 'Data without Access', and 'All Data'
- * By default "Data with Access'" is selected
+ * Tier access selector has 3 options: 'Studies with Access', 'Studies without Access', and 'All Studies'
+ * By default "Studies with Access'" is selected
  */
 class TierAccessSelector extends React.Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class TierAccessSelector extends React.Component {
           tabIndex={0}
         >
           <h4>
-            <span className='tier-access-selector__title'>Data Access</span>
+            <span className='tier-access-selector__title'>Request Access</span>
             <i className={`tier-access-selector__dropdown-icon g3-icon g3-icon--chevron-${this.state.toggled ? 'down' : 'up'}`} />
           </h4>
         </div>
@@ -55,7 +55,7 @@ class TierAccessSelector extends React.Component {
                     checked={this.state.selected === 'with-access'}
                   />
                   <i className='tier-access-selector__customized-radio-input' />
-                  <label htmlFor='with-access' className='tier-access-selector__label'>Data with Access</label>
+                  <label htmlFor='with-access' className='tier-access-selector__label'>Studies with Access</label>
                 </div>
                 <div className='tier-access-selector__item'>
                   <input
@@ -68,7 +68,7 @@ class TierAccessSelector extends React.Component {
                     checked={this.state.selected === 'without-access'}
                   />
                   <i className='tier-access-selector__customized-radio-input' />
-                  <label htmlFor='without-access' className='tier-access-selector__label'>Data without Access</label>
+                  <label htmlFor='without-access' className='tier-access-selector__label'>Studies without Access</label>
                 </div>
                 <div className='tier-access-selector__item'>
                   <input
@@ -81,14 +81,14 @@ class TierAccessSelector extends React.Component {
                     checked={this.state.selected === 'all-data'}
                   />
                   <i className='tier-access-selector__customized-radio-input' />
-                  <label htmlFor='all-data' className='tier-access-selector__label'>All Data</label>
+                  <label htmlFor='all-data' className='tier-access-selector__label'>All Studies</label>
                 </div>
               </div>
               {
                 this.state.selected !== 'with-access' && !this.props.hideGetAccessButton && (
                   <div className='tier-access-selector__button-wrapper'>
                     <Button
-                      label='Get Access'
+                      label='Request Access'
                       className='tier-access-selector__button'
                       buttonType='default'
                       enabled={!!(this.props.getAccessButtonLink)}
