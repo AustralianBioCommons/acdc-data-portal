@@ -13,7 +13,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.14.0",
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@gen3/guppy": "^0.20.1",
+    "@gen3/guppy": "^0.24.0",
     "@gen3/ui-component": "^0.11.4",
     "@grafana/faro-core": "^1.9.1",
     "@grafana/faro-react": "^1.9.0",
@@ -179,6 +179,15 @@
     "@reactour/mask": "0.5.1",
     "msw": {
       "cookie": "0.7.1"
+    },
+    "fast-uri": "^3.1.5",
+    "nanoid": "^3.3.18",
+    "js-yaml": "^3.15.1",
+    "cosmiconfig@8.3.6": {
+      "js-yaml": "^4.3.1"
+    },
+    "cosmiconfig@8.0.0": {
+      "js-yaml": "^4.3.1"
     }
   },
   "jest": {
